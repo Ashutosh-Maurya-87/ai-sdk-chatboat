@@ -44,7 +44,7 @@ export default function RAGChatbotPage() {
     };
 
     return (
-        <div className="flex flex-col h-screen max-w-4xl mx-auto p-4 sm:p-6 bg-background text-foreground">
+        <div className="max-w-4xl mx-auto p-6 relative size-full h-[calc(100vh-4rem)]">
             {/* Header */}
             <header className="flex items-center justify-between border-b pb-4 mb-4">
                 <div className="flex items-center gap-2">
@@ -52,7 +52,7 @@ export default function RAGChatbotPage() {
                         <Sparkles className="size-5" />
                     </div>
                     <div>
-                        <h1 className="font-semibold text-lg leading-none">RAG Knowledge Assistant</h1>
+                        <h1 className="font-semibold text-lg leading-none p-4">RAG Knowledge Assistant</h1>
                         <p className="text-xs text-muted-foreground mt-1">
                             Ask questions backed by your document base
                         </p>
@@ -64,7 +64,6 @@ export default function RAGChatbotPage() {
             <div className="flex-1 overflow-hidden relative rounded-xl border bg-card/50 shadow-sm flex flex-col">
                 <Conversation className="h-full flex flex-col">
                     <ConversationContent className="p-4 sm:p-6 space-y-6">
-                        {/* Empty State */}
                         {messages.length === 0 ? (
                             <div className="flex flex-col items-center justify-center h-full min-h-87.5 text-center p-6 space-y-6">
                                 <div className="p-4 rounded-full bg-muted/50 border text-muted-foreground">
@@ -108,52 +107,15 @@ export default function RAGChatbotPage() {
                                                         <Fragment key={partIdx}>
                                                             <Message
                                                                 from={m.role}
-                                                                className="bg-primary text-primary-foreground rounded-2xl rounded-tr-sm px-4 py-2.5 shadow-sm">
+                                                            className="text-primary-foreground rounded-2xl rounded-tr-sm px-4 py-2.5 shadow-sm"
+                                                            >
                                                                 <MessageContent>
                                                                     <Response>{part.text}</Response>
                                                                 </MessageContent>
                                                             </Message>
                                                         </Fragment>
-                                                        // <div key={m.id} className="flex gap-3 max-w-3xl ml-auto justify-end">
-                                                        //     <div className="space-y-1 max-w-[85%]">
-                                                        //         <Message
-                                                        //             from='user'
-                                                        //             className="bg-primary text-primary-foreground rounded-2xl rounded-tr-sm px-4 py-2.5 shadow-sm">
-                                                        //             <MessageContent>
-                                                        //                 <p className="whitespace-pre-wrap text-sm leading-relaxed">
-                                                        //                     {m.content}
-                                                        //                 </p>
-                                                        //             </MessageContent>
-                                                        //         </Message>
-                                                        //     </div>
-                                                        //     <Avatar className="size-8 border shrink-0 mt-0.5">
-                                                        //         <AvatarFallback className="bg-muted text-muted-foreground">
-                                                        //             <User className="size-4" />
-                                                        //         </AvatarFallback>
-                                                        //     </Avatar>
-                                                        // </div>
                                                     );
 
-                                                // case "assistant":
-                                                //     return (
-                                                //         <div key={m.id} className="flex gap-3 max-w-3xl mr-auto justify-start">
-                                                //             <Avatar className="size-8 border shrink-0 mt-0.5">
-                                                //                 <AvatarFallback className="bg-primary/10 text-primary">
-                                                //                     <Bot className="size-4" />
-                                                //                 </AvatarFallback>
-                                                //             </Avatar>
-                                                //             <div className="space-y-1 max-w-[85%]">
-                                                //                 <Message
-                                                //                     from='assistant'
-                                                //                     className="bg-muted/60 text-foreground border rounded-2xl rounded-tl-sm px-4 py-2.5 shadow-sm"
-                                                //                 >
-                                                //                     <MessageContent>
-                                                //                         <Response>{m.content}</Response>
-                                                //                     </MessageContent>
-                                                //                 </Message>
-                                                //             </div>
-                                                //         </div>
-                                                //     );
 
                                                 default:
                                                     return null;
@@ -168,24 +130,7 @@ export default function RAGChatbotPage() {
                             (status === "submitted" || status === 'streaming') && <Loader />
                         }
 
-                        {/* // {isLoading && (
-                        //     <div className="flex gap-3 items-center text-muted-foreground text-sm pl-2">
-                        //         <div className="size-8 rounded-full border bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                        //             <Bot className="size-4 animate-pulse" />
-                        //         </div>
-                        //         <div className="flex items-center gap-2 bg-muted/40 px-3 py-2 rounded-xl border">
-                        //             <Loader className="size-4 animate-spin text-primary" />
-                        //             <span className="text-xs">Searching documents & generating response...</span>
-                        //         </div>
-                        //     </div>
-                        // )} */}
 
-
-                        {/* // {error && (
-                        //     <div className="p-3 text-xs text-destructive-foreground bg-destructive/10 border border-destructive/20 rounded-lg">
-                        //         An error occurred while generating the response. Please try again.
-                        //     </div>
-                        // )} */}
                     </ConversationContent>
 
                     <ConversationScrollButton className="bottom-20 right-6 shadow-md border" />
