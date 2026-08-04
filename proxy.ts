@@ -8,7 +8,7 @@ const isAdminRoute = createRouteMatcher(["/upload"]);
 export default clerkMiddleware(async (auth, req) => {
 
   const { sessionClaims } = await auth();
-  console.log('sessionClaims', sessionClaims)
+  // console.log('sessionClaims', sessionClaims)
   const isAdmin = sessionClaims?.metadata?.role === 'admin';
 
   if (isAdminRoute(req) && !isAdmin) {

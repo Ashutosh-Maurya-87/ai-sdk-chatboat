@@ -15,10 +15,15 @@ const tools = {
         }),
         execute: async ({ query }) => {
             try {
+                // console.log("=== TOOL EXECUTION STARTED ===");
+                // console.log("Query:", query);
                 // query: The query string to search for relevant documents in the knowledge base.
                 // 3: The maximum number of relevant documents to return from the search.
                 // 0.5: The similarity threshold for filtering relevant documents. Only documents with a similarity score above this threshold will be returned.
-                const results = await searchDocuments(query, 3, 0.5);
+                const results = await searchDocuments(query, 5, 0.1);
+
+                // console.log("=== CONTEXT SENT TO LLM ===", results);
+                // console.log(results.map(doc => doc.content).join("\n\n"));
 
                 if (results.length === 0) {
                     return "No relevant documents found in the knowledge base.";
@@ -41,7 +46,7 @@ export type ChatMessage = UIMessage<never, UIDataTypes, ChatTools>
 export async function POST(req: Request) {
     try {
         const { messages }: { messages: ChatMessage[] } = await req.json()
-
+        console.log("1. Incoming Messages Count:",messages, messages?.length);
         const result = streamText({
             model: openai("gpt-4.1-mini"),
             messages: await convertToModelMessages(messages),
@@ -54,6 +59,7 @@ export async function POST(req: Request) {
                      Do not flood them with all the information from the search results.`,
             stopWhen: stepCountIs(2),
         })
+        // console.log('Chat result---->', result)
         return result.toUIMessageStreamResponse()
     } catch (error) {
         console.error('failed to generate the response', error)

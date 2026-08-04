@@ -9,7 +9,7 @@ import { generateEmbedding } from "./embeddings";
 export async function searchDocuments(
     query: string,
     limit: number = 5,
-    threshold: number = 0.5
+    threshold: number = 0.2
 ) {
     // Generate embedding for the search query
     const embedding = await generateEmbedding(query);
@@ -33,6 +33,10 @@ export async function searchDocuments(
         .where(gt(similarity, threshold))
         .orderBy(desc(similarity))
         .limit(limit);
+
+    console.log("=== DB QUERY RESULTS ===");
+    console.log("Count:", similarDocuments.length);
+    console.log("Documents:", JSON.stringify(similarDocuments, null, 2));
 
     return similarDocuments;
 }
